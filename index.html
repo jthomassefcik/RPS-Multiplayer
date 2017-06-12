@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="assets/code.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+
+<body>
+    <div id="game">
+        <p>Press r, p or s to start playing!</p>
+    </div>
+    <div id="results"></div>
+
+
+    <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCL3XrXztKJzwC-lNaEbl_YFA0vk-9ezOw",
+            authDomain: "rock-paper-scissors-e426e.firebaseapp.com",
+            databaseURL: "https://rock-paper-scissors-e426e.firebaseio.com",
+            projectId: "rock-paper-scissors-e426e",
+            storageBucket: "rock-paper-scissors-e426e.appspot.com",
+            messagingSenderId: "622227834993"
+        };
+        firebase.initializeApp(config);
+
+        database = firebase.database();
+
+        database.ref().set({
+            PLAYERS_LOCATION: 'player_list',
+            PLAYER_DATA_LOCATION: 'player_data'
+        })
+
+        
+
+
+    </script>
+
+    <script>
+        go();
+    </script>
+</body>
+
+</html>
