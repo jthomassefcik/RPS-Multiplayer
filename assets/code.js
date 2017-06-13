@@ -1,7 +1,16 @@
+// function go() {
+//   var userId = prompt('Username?', 'Guest');
+//   // Consider adding '/<unique id>' if you have multiple games.
+//   var gameRef = new Firebase(GAME_LOCATION);
+//   assignPlayerNumberAndPlayGame(userId, gameRef);
+// };
+
+// The maximum number of players.  If there are already 
+// NUM_PLAYERS assigned, users won't be able to join the game.
 var NUM_PLAYERS = 2;
 
 // The root of your game data.
-var GAME_LOCATION = 'https://rock-paper-scissors-e426e.firebaseio.com/';
+var GAME_LOCATION = 'https://SampleGame.firebaseIO-demo.com/';
 
 // A location under GAME_LOCATION that will store the list of 
 // players who have joined the game (up to MAX_PLAYERS).
@@ -12,14 +21,9 @@ var PLAYERS_LOCATION = 'player_list';
 var PLAYER_DATA_LOCATION = 'player_data';
 
 
-function go() {
-  var userId = prompt('Username?', 'Guest');
-  // Consider adding '/<unique id>' if you have multiple games. 
-  assignPlayerNumberAndPlayGame(userId);
-};
-
+// Called after player assignment completes.
 function playGame(myPlayerNumber, userId, justJoinedGame, gameRef) {
-  var playerDataRef = gameRef.ref(PLAYER_DATA_LOCATION + '/' + myPlayerNumber);
+  var playerDataRef = gameRef.ref('/' + PLAYER_DATA_LOCATION + '/' + myPlayerNumber);
   alert('You are player number ' + myPlayerNumber + 
       '.  Your data will be located at ' + playerDataRef.toString());
 
@@ -29,9 +33,9 @@ function playGame(myPlayerNumber, userId, justJoinedGame, gameRef) {
   }
 }
 
-
-function assignPlayerNumberAndPlayGame(userId) {
-  var playerListRef = database.ref('/player_list');
+// Use transaction() to assign a player number, then call playGame().
+function assignPlayerNumberAndPlayGame(userId, gameRef) {
+  var playerListRef = gameRef.ref(PLAYERS_LOCATION);
   var myPlayerNumber, alreadyInGame = false;
 
   playerListRef.transaction(function(playerList) {
@@ -77,7 +81,6 @@ function assignPlayerNumberAndPlayGame(userId) {
     }
   });
 }
-
 
 
 var rps = {

@@ -35,16 +35,12 @@
         };
         firebase.initializeApp(config);
 
-        database = firebase.database();
-
-        database.ref().set({
-            PLAYERS_LOCATION: 'player_list',
-            PLAYER_DATA_LOCATION: 'player_data'
-        })
-
-        
-
-
+        function go() {
+            var userId = prompt('Username?', 'Guest');
+            // Consider adding '/<unique id>' if you have multiple games.
+            var gameRef = firebase.database();
+            assignPlayerNumberAndPlayGame(userId, gameRef);
+        };
     </script>
 
     <script>
