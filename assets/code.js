@@ -22,14 +22,14 @@ var PLAYER_DATA_LOCATION = 'player_data';
 
 
 // Called after player assignment completes.
-function playGame(myPlayerNumber, userId, justJoinedGame, gameRef) {
+function playGame(myPlayerNumber, userId, justJoinedGame, gameRef) {  
   var playerDataRef = gameRef.ref('/' + PLAYER_DATA_LOCATION + '/' + myPlayerNumber);
   alert('You are player number ' + myPlayerNumber + 
       '.  Your data will be located at ' + playerDataRef.toString());
 
   if (justJoinedGame) {
     alert('Doing first-time initialization of data.');
-    playerDataRef.set({userId: userId, state: 'game state'});
+    playerDataRef.set({userId: userId, state: 'game state', userGuess: '', number: myPlayerNumber});
   }
 }
 
@@ -99,6 +99,15 @@ var rps = {
         var key = event.key;
 
         if (key === "r" || key == "p" || key == "s") {
+            
+            
+            if (database.ref('/player_data'[0]+'/number') == 0){
+                console.log("check");
+                database.ref('/player_data/0/userGuess').set(key);
+            }
+            else {
+                database.ref('/player_data/1/userGuess').set(key);
+            }
             rps.currentUserGuess = event.key;
             rps.makeComputerGuess();
             rps.playGame();
