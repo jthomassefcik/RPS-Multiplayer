@@ -95,19 +95,37 @@ var rps = {
     },
     handleUserGuess: function () {
         $(document).keydown(event);
+        
         console.log(event);
         var key = event.key;
+        var tempDB;
 
         if (key === "r" || key == "p" || key == "s") {
+            recentDB.on('value', function (snapshot) {
+            tempDB = snapshot.val();
+            console.log((tempDB.player_data.number));
+            console.log(snapshot.val());
+            console.log(tempDB.playerList)
+            for (var i = 0; i < tempDB.player_data.length; i++) {
+                if (tempDB.player_data[i].number === 0) {
+                    // case 0:  // if the player number is = 0 then we set the key value database.ref('/player_data/1/userGuess').set(key);
+                    console.log('case 0')
+                    database.ref('/player_data/'+[i]+'/userGuess').set(key);  
+                }
+                else if (tempDB.player_data[i].number === 1) {
+                    // case 1:
+                    console.log('case 1')
+                    database.ref('/player_data/'+[i]+'/userGuess').set(key);
+                    // break;   
+                }
+                
+                console.log("workin!")
+                
+            }
+        }); 
             
             
-            if (database.ref('/player_data'[0]+'/number') == 0){
-                console.log("check");
-                database.ref('/player_data/0/userGuess').set(key);
-            }
-            else {
-                database.ref('/player_data/1/userGuess').set(key);
-            }
+            
             rps.currentUserGuess = event.key;
             rps.makeComputerGuess();
             rps.playGame();
